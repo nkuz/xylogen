@@ -1,7 +1,7 @@
 #include <FastLED.h>
 #include <Arduino.h>
 
-#define NUM_LEDS 10
+#define NUM_LEDS 50
 int r = 193;
 int g = 217;
 

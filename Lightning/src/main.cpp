@@ -3,43 +3,52 @@
 
 #define NUM_LEDS 10
 CRGBArray<NUM_LEDS> leds;
-int Brightness = 0;
+int Brightness = 5;
 int fadeAmount = 5;
+
 
 void setup()
 {
-  FastLED.addLeds<NEOPIXEL, 3>(leds, NUM_LEDS);
-  leds[0] = CRGB:: White;
-  leds[1] = CRGB:: White;
-  leds[2] = CRGB:: White;
-  leds[3] = CRGB:: White;
-  leds[4] = CRGB:: White;
+  FastLED.setBrightness(50);
+  FastLED.addLeds<NEOPIXEL, 3>(leds, 10);
+ 
+}
+
+
+void motion()
+{
+  for (int i = 0; i< NUM_LEDS; i++)
+  {
+    leds[i]= CRGB::White;
+    FastLED.show();
+    delay(15);
+    leds[i] = CRGB::Black;
+    FastLED.show();
+  }
 
 }
 
-void pulsate()
+void fade()
 {
-  FastLED.setBrightness(Brightness);
-  if(Brightness<0 || Brightness>255)
-  {
-    fadeAmount = -fadeAmount;
-  }
-  else 
-  {
-    Brightness += fadeAmount;
-  }
-  delay(80);
+  fill_solid( &(leds[0]), NUM_LEDS, CHSV( 0, 0, 255) );
+FastLED.show();
+
+for (int i =0; i<45; i++)
+{
+ Brightness = Brightness - fadeAmount;
+    fill_solid( &(leds[0]), NUM_LEDS, CHSV( 0, 0, Brightness) );
+    FastLED.show();
+    delay(30);
 }
 
-void flash()
-{
-
+    
 }
 
 void loop()
 {
-  pulsate();
-  pulsate();
-  delay(100);
+  motion();
+  delay(400);
+  fade();
+  
  
 }
